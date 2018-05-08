@@ -83,9 +83,11 @@ class App extends Component {
                 name="Read Yo"
                 books={this.state.books3}
               />
-              <SearchButton 
-                onSearchButtonClick={this.toggleSearchPage}
-              />
+              <div className="search-button">
+                <SearchButton 
+                  onSearchButtonClick={this.toggleSearchPage}
+                />
+              </div>  
             </div>
           )}
         </div>  
