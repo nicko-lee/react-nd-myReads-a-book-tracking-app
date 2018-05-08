@@ -13,13 +13,9 @@ class App extends Component {
     showSearchPage: false
   }
 
-  doShowSearchPage = () => {
-    this.setState({ showSearchPage: true })
+  toggleSearchPage = (showOrNoShow) => {
+    this.setState({ showSearchPage: showOrNoShow })
   }
-  dontShowSearchPage = () => {
-    this.setState({ showSearchPage: false })
-  }
-
 
   render() {
     return (
@@ -27,14 +23,14 @@ class App extends Component {
         <div className="list-books-content">
           { this.state.showSearchPage ? (
             <SearchBooks 
-              onBackButtonClick={this.dontShowSearchPage}
+              onBackButtonClick={this.toggleSearchPage}
             />
           ) : (  
             <div>
               <Header />
               <Bookshelf />
               <SearchButton 
-                onSearchButtonClick={this.doShowSearchPage}
+                onSearchButtonClick={this.toggleSearchPage}
               />
             </div>
           )}
