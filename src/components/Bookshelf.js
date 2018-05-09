@@ -3,6 +3,12 @@ import Book from './Book';
 import PropTypes from 'prop-types'
 
 class Bookshelf extends Component {
+
+  constructor(props) {
+    super(props)
+    console.log(this.props)
+  }
+
     static propTypes = {
       name: PropTypes.string.isRequired,
       books: PropTypes.array.isRequired  
@@ -16,12 +22,12 @@ class Bookshelf extends Component {
                 <h2 className="bookshelf-title">{this.props.name}</h2>
                   <div className="bookshelf-books">
                   <ol className='books-grid'>
-                      {this.props.books.map((book) => (
-                        <li key={book.name}>
+                      {this.props.books.map( book => (
+                        <li key={book.id}>
                         <Book 
                         title={book.title}
-                        author={book.author}
-                        imgUrl={book.imgUrl}
+                        author={book.authors}
+                        imgUrl={book.imageLinks.thumbnail}
                         /> 
                         </li>
                       ))}

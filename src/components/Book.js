@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 class Book extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
+        author: PropTypes.array.isRequired,
         imgUrl: PropTypes.string.isRequired
     }
     render() {
@@ -23,7 +23,7 @@ class Book extends Component {
                 </div>
                 </div>
                 <div className="book-title">{this.props.title}</div>
-                <div className="book-authors">{this.props.author}</div>
+                { this.props.author.map( author => <div key={author} className="book-authors">{author}</div> )}
             </div>
 
         )
@@ -32,3 +32,8 @@ class Book extends Component {
 }
 
 export default Book
+
+
+
+
+
