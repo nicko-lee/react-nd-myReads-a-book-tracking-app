@@ -34,14 +34,16 @@ class App extends Component {
     allBooks.map( (book) => {
       if (book.shelf==="currentlyReading") {
         currentlyReading.push(book)
-        this.setState({ currentlyReading })
       } else if (book.shelf==="wantToRead") {
         wantToRead.push(book)
-        this.setState({ wantToRead })
       } else if (book.shelf==="read") {
         read.push(book)
-        this.setState({ read })
       }
+    })
+    this.setState({ 
+      currentlyReading,
+      wantToRead,
+      read 
     })
   }
 
@@ -67,18 +69,6 @@ class App extends Component {
     // send book to bookshelf that was selected
     this.sortBooks(this.state.allBooks)
 
-    // // grab original list of books from state
-    // const updatedBookArray = this.state.books
-
-    // console.log('updatedBookshelf', updatedBookshelf)
-    // // change shelf of book based on bookId
-    
-    // //updateAllBooks with updatedBookArray
-
-    // // this.setState({
-      
-
-    // })
   }
 
   render() {
@@ -110,6 +100,7 @@ class App extends Component {
               <div className="search-button">
                 <SearchButton 
                   onSearchButtonClick={this.toggleSearchPage}
+                  updateBookShelf={this.updateBookShelf}
                 />
               </div>  
             </div>
