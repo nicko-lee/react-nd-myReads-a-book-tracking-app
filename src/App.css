@@ -108,6 +108,12 @@ body, .app {
   padding: 80px 10px 20px;
 }
 
+.query-not-found-msg {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding-top: 10px;
+}
+
 /* books grid */
 
 .books-grid {

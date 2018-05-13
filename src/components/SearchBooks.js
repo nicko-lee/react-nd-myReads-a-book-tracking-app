@@ -60,7 +60,7 @@ class SearchBooks extends Component {
                 </div>
                 <div className="search-books-results">
                 
-                {this.state.error && (<div>Sorry there ain't no results for {this.state.query}</div>)}
+                {(this.state.error && this.state.query != '') && (<div className="query-not-found-msg">Sorry, there ain't no results for '{this.state.query}'   ¯\_(ツ)_/¯ </div>)}
 
                     { (this.state.booksReturned.length !== 0 && !this.state.error) ? ( 
                         <ol className="books-grid">
