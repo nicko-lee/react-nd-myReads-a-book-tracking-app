@@ -1,10 +1,39 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import * as BooksAPI from '../utils/BooksAPI';
+import Book from './Book';
+
 
 class SearchBooks extends Component {
     static propTypes = {
         onBackButtonClick: PropTypes.func.isRequired,
+        updateBookShelf: PropTypes.func.isRequired  
       }
+
+    state = {
+        query: '',
+        booksReturned: [],
+        error: false
+    }
+    updateQueryAndSearchBooks = (query) => {
+            this.setState(() => ({ query: query.trim() }))
+            BooksAPI.search(query)  // search for books from hitting server endpoint /search using query above
+            .then( books => {
+                const booksError = books.error ? true : false
+
+                this.setState({ 
+                    booksReturned: books,
+                    error: booksError
+                })
+            })
+            .catch(error => {
+                this.setState({ 
+                    booksReturned: [],
+                    query: ''
+                })
+            })
+    
+    }
 
     render() {
         return(
@@ -20,18 +49,38 @@ class SearchBooks extends Component {
                         However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                         you don't find a specific author or title. Every search is limited by search terms.
                         */}
-                        <input type="text" placeholder="Search by title or author"/>
+                        <input 
+                            type="text" 
+                            placeholder="Search by title or author"
+                            value={this.state.query}
+                            onChange={ (event) => this.updateQueryAndSearchBooks(event.target.value)} 
+                        />
 
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                
+                {this.state.error && (<div>Sorry there ain't no results for {this.state.query}</div>)}
+
+                    { (this.state.booksReturned.length !== 0 && !this.state.error) ? ( 
+                        <ol className="books-grid">
+                        {this.state.booksReturned.map( book => (
+                            <li key={book.id}>
+                            <Book 
+                            title={book.title || ''}
+                            author={book.authors || []}
+                            imgUrl={(book.imageLinks && book.imageLinks.thumbnail) ? book.imageLinks.thumbnail : ''}
+                            updateBookShelf={this.props.updateBookShelf}
+                            bookId={book.id || ''}
+                            bookShelf={book.shelf || ''}
+                            /> 
+                            </li>
+                        ) )}
+                        </ol>
+                    ) : null
+                    }
                 </div>
             </div>
-
-
-
-
 
 
         )

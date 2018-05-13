@@ -52,7 +52,7 @@ class App extends Component {
     this.setState({ showSearchPage: showOrNoShow })
   }
 
-  updateBookShelf = (targetBookShelf, bookId, originBookShelf ) => {
+  updateBookShelf = (targetBookShelf, bookId ) => {
     // update book.shelf value in allBooks array
     let allBooks = []
     this.state.allBooks.map( book => {
@@ -78,6 +78,7 @@ class App extends Component {
           { this.state.showSearchPage ? (
             <SearchBooks 
               onBackButtonClick={this.toggleSearchPage}
+              updateBookShelf={this.updateBookShelf}
             />
           ) : (  
             <div>
@@ -100,7 +101,6 @@ class App extends Component {
               <div className="search-button">
                 <SearchButton 
                   onSearchButtonClick={this.toggleSearchPage}
-                  updateBookShelf={this.updateBookShelf}
                 />
               </div>  
             </div>
