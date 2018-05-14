@@ -7,7 +7,8 @@ import Book from './Book';
 class SearchBooks extends Component {
     static propTypes = {
         onBackButtonClick: PropTypes.func.isRequired,
-        updateBookShelf: PropTypes.func.isRequired  
+        updateBookShelf: PropTypes.func.isRequired,  
+        allBooks: PropTypes.array.isRequired
       }
 
     state = {
@@ -33,6 +34,17 @@ class SearchBooks extends Component {
                 })
             })
     
+    }
+
+    getBookShelf = (targetBook) => {
+        let bookShelfName = 'none'
+        // based on bookId of current book
+        this.props.allBooks.map( book => {
+            if (book.id===targetBook.id) {
+                bookShelfName=book.shelf
+            }
+        })
+        return bookShelfName
     }
 
     render() {
@@ -72,7 +84,7 @@ class SearchBooks extends Component {
                             imgUrl={(book.imageLinks && book.imageLinks.thumbnail) ? book.imageLinks.thumbnail : ''}
                             updateBookShelf={this.props.updateBookShelf}
                             bookId={book.id || ''}
-                            bookShelf={book.shelf || 'none'}
+                            bookShelf={this.getBookShelf(book)}
                             /> 
                             </li>
                         ) )}
@@ -81,8 +93,6 @@ class SearchBooks extends Component {
                     }
                 </div>
             </div>
-
-
         )
     }
     

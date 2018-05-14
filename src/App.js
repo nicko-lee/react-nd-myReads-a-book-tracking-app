@@ -53,21 +53,17 @@ class App extends Component {
   }
 
   updateBookShelf = (targetBookShelf, bookId ) => {
-    // update book.shelf value in allBooks array
-    let allBooks = []
-    this.state.allBooks.map( book => {
-      if (book.id === bookId) {
-        book.shelf=targetBookShelf
-        allBooks.push(book)
-      }
-      else {
-        allBooks.push(book)
-      }
+    BooksAPI.get(bookId)
+    .then(book => {
+      BooksAPI.update(book, targetBookShelf)
+      .then( () => {
+        BooksAPI.getAll()
+        .then( books => {
+          this.setState({ allBooks: books }) 
+          this.sortBooks(books)
+        })
+      })
     })
-    this.setState({ allBooks })
-
-    // send book to bookshelf that was selected
-    this.sortBooks(this.state.allBooks)
 
   }
 
@@ -79,6 +75,7 @@ class App extends Component {
             <SearchBooks 
               onBackButtonClick={this.toggleSearchPage}
               updateBookShelf={this.updateBookShelf}
+              allBooks={this.state.allBooks}
             />
           ) : (  
             <div>
