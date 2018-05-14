@@ -16,7 +16,7 @@ class SearchBooks extends Component {
         error: false
     }
     updateQueryAndSearchBooks = (query) => {
-            this.setState(() => ({ query: query.trim() }))
+            this.setState(() => ({ query }))
             BooksAPI.search(query)  // search for books from hitting server endpoint /search using query above
             .then( books => {
                 const booksError = books.error ? true : false
@@ -60,7 +60,7 @@ class SearchBooks extends Component {
                 </div>
                 <div className="search-books-results">
                 
-                {(this.state.error && this.state.query != '') && (<div className="query-not-found-msg">Sorry, there ain't no results for '{this.state.query}'   ¯\_(ツ)_/¯ </div>)}
+                {(this.state.error && this.state.query !== '') && (<div className="query-not-found-msg">Sorry, there ain't no results for '{this.state.query}'.....¯\_(ツ)_/¯ </div>)}
 
                     { (this.state.booksReturned.length !== 0 && !this.state.error) ? ( 
                         <ol className="books-grid">
@@ -72,7 +72,7 @@ class SearchBooks extends Component {
                             imgUrl={(book.imageLinks && book.imageLinks.thumbnail) ? book.imageLinks.thumbnail : ''}
                             updateBookShelf={this.props.updateBookShelf}
                             bookId={book.id || ''}
-                            bookShelf={book.shelf || ''}
+                            bookShelf={book.shelf || 'none'}
                             /> 
                             </li>
                         ) )}
