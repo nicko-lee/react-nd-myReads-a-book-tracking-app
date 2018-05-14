@@ -9,8 +9,7 @@ class Book extends Component {
         updateBookShelf: PropTypes.func.isRequired,
         bookId: PropTypes.string.isRequired,
         bookShelf: PropTypes.string.isRequired
-    }
-
+    };
 
     render() {
         return(
@@ -31,12 +30,12 @@ class Book extends Component {
                 { this.props.author.map( author => <div key={author} className="book-authors">{author}</div> )}
             </div>
 
-        )
+        );
     }
 
 }
 
-export default Book
+export default Book;
 
 
 

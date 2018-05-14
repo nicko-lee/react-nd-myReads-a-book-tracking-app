@@ -8,7 +8,7 @@ class Bookshelf extends Component {
       name: PropTypes.string.isRequired,
       books: PropTypes.array.isRequired,
       updateBookShelf: PropTypes.func.isRequired  
-    }
+    };
  
     render() {
         return (
@@ -35,8 +35,8 @@ class Bookshelf extends Component {
             </div>
           </div>
           </div>
-        )
+        );
     }
 }
 
-export default Bookshelf
+export default Bookshelf;

@@ -9,42 +9,42 @@ class SearchBooks extends Component {
         onBackButtonClick: PropTypes.func.isRequired,
         updateBookShelf: PropTypes.func.isRequired,  
         allBooks: PropTypes.array.isRequired
-      }
+      };
 
     state = {
         query: '',
         booksReturned: [],
         error: false
-    }
+    };
     updateQueryAndSearchBooks = (query) => {
-            this.setState(() => ({ query }))
+            this.setState(() => ({ query }));
             BooksAPI.search(query)  // search for books from hitting server endpoint /search using query above
             .then( books => {
-                const booksError = books.error ? true : false
+                const booksError = books.error ? true : false;
 
                 this.setState({ 
                     booksReturned: books,
                     error: booksError
-                })
+                });
             })
             .catch(error => {
                 this.setState({ 
                     booksReturned: [],
                     query: ''
-                })
+                });
             })
     
     }
 
     getBookShelf = (targetBook) => {
-        let bookShelfName = 'none'
+        let bookShelfName = 'none';
         // based on bookId of current book
         this.props.allBooks.map( book => {
             if (book.id===targetBook.id) {
-                bookShelfName=book.shelf
+                bookShelfName=book.shelf;
             }
         })
-        return bookShelfName
+        return bookShelfName;
     }
 
     render() {
@@ -98,4 +98,4 @@ class SearchBooks extends Component {
     
 }
 
-export default SearchBooks
+export default SearchBooks;

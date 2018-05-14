@@ -6,6 +6,7 @@ import Bookshelf from './components/Bookshelf';
 import SearchBooks from './components/SearchBooks';
 import SearchButton from './components/SearchButton';
 import * as BooksAPI from './utils/BooksAPI';
+import _ from 'lodash';
 
 class App extends Component {
   state = {
@@ -14,42 +15,42 @@ class App extends Component {
     currentlyReading: [],
     wantToRead: [],
     read: []
-  }
+  };
 
   componentDidMount() {
     // get books from server
     BooksAPI.getAll()
     // loop through and sort into shelves
     .then((books) => {
-      this.setState({ allBooks: books })
+      this.setState({ allBooks: books });
       // loop through and sort into shelves
-      this.sortBooks(books)
-    })
+      this.sortBooks(books);
+    });
     }
 
   sortBooks = (allBooks) => {
-    let currentlyReading = []
-    let wantToRead = []
-    let read = [] 
+    let currentlyReading = [];
+    let wantToRead = [];
+    let read = []; 
     allBooks.map( (book) => {
       if (book.shelf==="currentlyReading") {
-        currentlyReading.push(book)
+        currentlyReading.push(book);
       } else if (book.shelf==="wantToRead") {
-        wantToRead.push(book)
+        wantToRead.push(book);
       } else if (book.shelf==="read") {
-        read.push(book)
+        read.push(book);
       }
     })
     this.setState({ 
       currentlyReading,
       wantToRead,
       read 
-    })
+    });
   }
 
 
   toggleSearchPage = (showOrNoShow) => {
-    this.setState({ showSearchPage: showOrNoShow })
+    this.setState({ showSearchPage: showOrNoShow });
   }
 
   updateBookShelf = (targetBookShelf, bookId ) => {
@@ -59,8 +60,8 @@ class App extends Component {
       .then( () => {
         BooksAPI.getAll()
         .then( books => {
-          this.setState({ allBooks: books }) 
-          this.sortBooks(books)
+          this.setState({ allBooks: books }); 
+          this.sortBooks(books);
         })
       })
     })
