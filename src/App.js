@@ -6,7 +6,6 @@ import Bookshelf from './components/Bookshelf';
 import SearchBooks from './components/SearchBooks';
 import SearchButton from './components/SearchButton';
 import * as BooksAPI from './utils/BooksAPI';
-import _ from 'lodash';
 
 class App extends Component {
   state = {

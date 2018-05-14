@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
-
+import _ from 'lodash';
 
 class SearchBooks extends Component {
     static propTypes = {
@@ -16,8 +16,14 @@ class SearchBooks extends Component {
         booksReturned: [],
         error: false
     };
-    updateQueryAndSearchBooks = (query) => {
-            this.setState(() => ({ query }));
+
+    updateQueryOnSearchInputChange = (query) => {
+        const bookSearch = _.debounce((query) => { this.searchBooks(query) }, 300);
+        this.setState(() => ({ query }));
+        bookSearch(query);
+    }
+
+    searchBooks = (query) => {
             BooksAPI.search(query)  // search for books from hitting server endpoint /search using query above
             .then( books => {
                 const booksError = books.error ? true : false;
@@ -32,7 +38,7 @@ class SearchBooks extends Component {
                     booksReturned: [],
                     query: ''
                 });
-            })
+            });
     
     }
 
@@ -43,11 +49,12 @@ class SearchBooks extends Component {
             if (book.id===targetBook.id) {
                 bookShelfName=book.shelf;
             }
-        })
+        });
         return bookShelfName;
     }
 
     render() {
+        
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -65,7 +72,7 @@ class SearchBooks extends Component {
                             type="text" 
                             placeholder="Search by title or author"
                             value={this.state.query}
-                            onChange={ (event) => this.updateQueryAndSearchBooks(event.target.value)} 
+                            onChange={ (event) => this.updateQueryOnSearchInputChange(event.target.value)}  
                         />
 
                     </div>
