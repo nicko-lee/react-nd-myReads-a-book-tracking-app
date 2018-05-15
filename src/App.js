@@ -6,11 +6,11 @@ import Bookshelf from './components/Bookshelf';
 import SearchBooks from './components/SearchBooks';
 import SearchButton from './components/SearchButton';
 import * as BooksAPI from './utils/BooksAPI';
+import { Route } from 'react-router-dom'
 
 class App extends Component {
   state = {
     allBooks: [], 
-    showSearchPage: false,
     currentlyReading: [],
     wantToRead: [],
     read: []
@@ -47,11 +47,6 @@ class App extends Component {
     });
   }
 
-
-  toggleSearchPage = (showOrNoShow) => {
-    this.setState({ showSearchPage: showOrNoShow });
-  }
-
   updateBookShelf = (targetBookShelf, bookId ) => {
     BooksAPI.get(bookId)
     .then(book => {
@@ -71,37 +66,36 @@ class App extends Component {
     return (
       <div className="App">
         <div className="list-books-content">
-          { this.state.showSearchPage ? (
+          <Route path='/search-books' render={() => (
             <SearchBooks 
-              onBackButtonClick={this.toggleSearchPage}
               updateBookShelf={this.updateBookShelf}
               allBooks={this.state.allBooks}
             />
-          ) : (  
+          )}/>
+          <Route exact path='/' render={() => (
             <div>
-              <Header />
-              <Bookshelf 
-                name="Currently Reading Yo"
-                books={this.state.currentlyReading}
-                updateBookShelf={this.updateBookShelf}
-              />
-              <Bookshelf 
-                name="Want to Read Yo"
-                books={this.state.wantToRead}
-                updateBookShelf={this.updateBookShelf}
-              />
-              <Bookshelf 
-                name="Read Yo"
-                books={this.state.read}
-                updateBookShelf={this.updateBookShelf}
-              />
-              <div className="search-button">
-                <SearchButton 
-                  onSearchButtonClick={this.toggleSearchPage}
+                <Header />
+                <Bookshelf 
+                  name="Currently Reading Yo"
+                  books={this.state.currentlyReading}
+                  updateBookShelf={this.updateBookShelf}
                 />
+                <Bookshelf 
+                  name="Want to Read Yo"
+                  books={this.state.wantToRead}
+                  updateBookShelf={this.updateBookShelf}
+                />
+                <Bookshelf 
+                  name="Read Yo"
+                  books={this.state.read}
+                  updateBookShelf={this.updateBookShelf}
+                />
+              <div className="search-button">
+                <SearchButton />
               </div>  
             </div>
-          )}
+          )}/>
+  
         </div>  
       </div>
     );

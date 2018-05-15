@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class SearchButton extends Component {
-    static propTypes = {
-        onSearchButtonClick: PropTypes.func.isRequired,
-      };
 
     render() {
         return(
             <div className="open-search">
-                <a onClick={() => this.props.onSearchButtonClick(true)}>Add a book</a>
+                <Link 
+                    to='/search-books'
+                >Add a book</Link>
             </div>
         );
     }

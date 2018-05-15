@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 class SearchBooks extends Component {
     static propTypes = {
-        onBackButtonClick: PropTypes.func.isRequired,
         updateBookShelf: PropTypes.func.isRequired,  
         allBooks: PropTypes.array.isRequired
       };
@@ -58,7 +58,10 @@ class SearchBooks extends Component {
         return(
             <div className="search-books">
                 <div className="search-books-bar">
-                    <a className="close-search" onClick={() => this.props.onBackButtonClick(false)}>Close</a>
+                    <Link 
+                        to='/'
+                        className="close-search" 
+                    >Close</Link>
                     <div className="search-books-input-wrapper">
                         {/*
                         NOTES: The search from BooksAPI is limited to a particular set of search terms.
