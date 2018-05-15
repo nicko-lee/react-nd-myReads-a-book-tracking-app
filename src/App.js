@@ -6,7 +6,7 @@ import Bookshelf from './components/Bookshelf';
 import SearchBooks from './components/SearchBooks';
 import SearchButton from './components/SearchButton';
 import * as BooksAPI from './utils/BooksAPI';
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 
 class App extends Component {
   state = {
@@ -27,6 +27,7 @@ class App extends Component {
     });
     }
 
+  // send book to bookshelf that was selected
   sortBooks = (allBooks) => {
     let currentlyReading = [];
     let wantToRead = [];
@@ -46,21 +47,54 @@ class App extends Component {
       read 
     });
   }
+  
+  // check if selected book exists in this.state.allBooks (i.e. it is a book that's currently on one of our bookshelves)
+  isSelectedBookInStateAllBooks = (bookId) => {
+    let bool = false;   
+    this.state.allBooks.map( book => {
+        if (book.id === bookId) {
+        bool = true;
+        }
+      })
+      return bool;
+  }
 
   updateBookShelf = (targetBookShelf, bookId ) => {
-    BooksAPI.get(bookId)
-    .then(book => {
-      BooksAPI.update(book, targetBookShelf)
-      .then( () => {
-        BooksAPI.getAll()
-        .then( books => {
-          this.setState({ allBooks: books }); 
-          this.sortBooks(books);
+    let allBooks = [];
+    // 2 scenarios:
+    // #1: if update book shelf from home page
+    if (this.isSelectedBookInStateAllBooks(bookId)) {
+      // update book.shelf value in this.state.allBooks array directly
+      this.state.allBooks.map( book => {
+        if (book.id === bookId) {
+          book.shelf=targetBookShelf;
+          allBooks.push(book);
+        } else {
+          allBooks.push(book);
+        }
+      })
+      this.setState({ allBooks });
+      this.sortBooks(this.state.allBooks);
+      BooksAPI.get(bookId)
+      .then(book => BooksAPI.update(book, targetBookShelf));
+  } else {
+    // #2: if update book shelf from search page
+      BooksAPI.get(bookId)
+      .then(book => {
+        BooksAPI.update(book, targetBookShelf)
+        .then( () => {
+          BooksAPI.getAll()
+          .then( books => {
+            this.setState({ allBooks: books }); 
+            this.sortBooks(books);
+          })
         })
       })
-    })
 
   }
+
+  }
+
 
   render() {
     return (
