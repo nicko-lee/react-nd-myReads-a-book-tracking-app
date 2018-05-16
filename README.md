@@ -72,7 +72,5 @@ A note on the backend server: The backend API uses a fixed set of search results
 
 
 
-chore: Fixing warning statements in console. Fixing formatting and adding some comments. Updated README
-
 
 
