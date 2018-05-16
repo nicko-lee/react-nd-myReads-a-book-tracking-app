@@ -21,6 +21,7 @@ The key learnings I derived from this project were manifold. Here are some off t
 * **ES6** - good experience getting the hang of ES6 syntax and way of doing things which are often shorter and more elegant.
 * **Coding standards and Udacity style guides** - style guide for Git messages. Getting the hang of good practices.
 * **PropTypes package** - good practice and helps in debugging given JavaScript is loosely typed this provides some guardrails.
+* **Deploying** - what's the point of doing all this "devving" if it only works on localhost on your local machine lol. Real devs got their stuff on Chrome/Firefox right? Good experience using a PaaS (Heroku) to deploy my app to share it with friends and family.
 
 ## How to start the frontend React App
 * Simply `git clone` the repo.
@@ -41,7 +42,7 @@ A note on the backend server: The backend API uses a fixed set of search results
 ## Project Rubric/Spec Checklist
 
 ### Application Setup
-- [] The application was created with create-react-app and requires only `npm install` and `npm start` to get it installed and launched.
+- [x] The application was created with create-react-app and requires only `npm install` and `npm start` to get it installed and launched.
 - [x] An updated README that describes the project and has instructions for installing and launching the project is included.
 
 ### Main Page
@@ -70,7 +71,12 @@ A note on the backend server: The backend API uses a fixed set of search results
 - [x] Component state is passed down from parent components to child components. The state variable is not modified directly - setState() function is used correctly. Books have the same state on both the search page and the main application page: If a book is on a bookshelf, that is reflected in both locations.
 - [x] All JSX code is formatted properly and functional.
 
+## Deployed demo version
+As mentioned above what's the point of doing all this "devving" if it only works on localhost? Real devs got their stuff on Chrome/Firefox. That way you can share with friends and family! 
 
+[Here is the deployed version of my app.](https://reactnd-project-1-myreads.herokuapp.com/)
+
+Note that it may take a few seconds to boot up for the first time as it lives on a free dyno on Heroku.
 
 
 
