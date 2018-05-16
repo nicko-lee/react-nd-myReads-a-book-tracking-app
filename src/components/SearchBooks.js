@@ -18,7 +18,7 @@ class SearchBooks extends Component {
     };
 
     updateQueryOnSearchInputChange = (query) => {
-        const bookSearch = _.debounce((query) => { this.searchBooks(query) }, 300);
+        const bookSearch = _.debounce((query) => { this.searchBooks(query) }, 300); // user input throttling
         this.setState(() => ({ query }));
         bookSearch(query);
     }
@@ -39,13 +39,13 @@ class SearchBooks extends Component {
                     query: ''
                 });
             });
-    
     }
 
+    // the reason for this method is the data returned from /search is slightly different to that of /books in that it's missing a shelf
     getBookShelf = (targetBook) => {
         let bookShelfName = 'none';
         // based on bookId of current book
-        this.props.allBooks.map( book => {
+        this.props.allBooks.forEach( book => {
             if (book.id===targetBook.id) {
                 bookShelfName=book.shelf;
             }

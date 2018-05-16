@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Bookshelf from './components/Bookshelf';
@@ -17,9 +16,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // get books from server
+    // get books from server & save in App state
     BooksAPI.getAll()
-    // loop through and sort into shelves
     .then((books) => {
       this.setState({ allBooks: books });
       // loop through and sort into shelves
@@ -32,7 +30,7 @@ class App extends Component {
     let currentlyReading = [];
     let wantToRead = [];
     let read = []; 
-    allBooks.map( (book) => {
+    allBooks.forEach(book => {
       if (book.shelf==="currentlyReading") {
         currentlyReading.push(book);
       } else if (book.shelf==="wantToRead") {
@@ -40,7 +38,7 @@ class App extends Component {
       } else if (book.shelf==="read") {
         read.push(book);
       }
-    })
+    });
     this.setState({ 
       currentlyReading,
       wantToRead,
@@ -51,7 +49,7 @@ class App extends Component {
   // check if selected book exists in this.state.allBooks (i.e. it is a book that's currently on one of our bookshelves)
   isSelectedBookInStateAllBooks = (bookId) => {
     let bool = false;   
-    this.state.allBooks.map( book => {
+    this.state.allBooks.forEach( book => {
         if (book.id === bookId) {
         bool = true;
         }
@@ -62,10 +60,9 @@ class App extends Component {
   updateBookShelf = (targetBookShelf, bookId ) => {
     let allBooks = [];
     // 2 scenarios:
-    // #1: if update book shelf from home page
+    // #1: if update book shelf from home page, update book.shelf value in this.state.allBooks array directly
     if (this.isSelectedBookInStateAllBooks(bookId)) {
-      // update book.shelf value in this.state.allBooks array directly
-      this.state.allBooks.map( book => {
+      this.state.allBooks.forEach( book => {
         if (book.id === bookId) {
           book.shelf=targetBookShelf;
           allBooks.push(book);
@@ -78,7 +75,7 @@ class App extends Component {
       BooksAPI.get(bookId)
       .then(book => BooksAPI.update(book, targetBookShelf));
   } else {
-    // #2: if update book shelf from search page
+    // #2: if update book shelf from search page, make an API call to update which will propagate to this.state.allBooks
       BooksAPI.get(bookId)
       .then(book => {
         BooksAPI.update(book, targetBookShelf)
@@ -90,11 +87,8 @@ class App extends Component {
           })
         })
       })
-
   }
-
   }
-
 
   render() {
     return (
@@ -110,17 +104,17 @@ class App extends Component {
             <div>
                 <Header />
                 <Bookshelf 
-                  name="Currently Reading Yo"
+                  name="Books I'm Currently Reading Yo!"
                   books={this.state.currentlyReading}
                   updateBookShelf={this.updateBookShelf}
                 />
                 <Bookshelf 
-                  name="Want to Read Yo"
+                  name="Books I Want to Read Yo!"
                   books={this.state.wantToRead}
                   updateBookShelf={this.updateBookShelf}
                 />
                 <Bookshelf 
-                  name="Read Yo"
+                  name="Books I've Read Yo!"
                   books={this.state.read}
                   updateBookShelf={this.updateBookShelf}
                 />
